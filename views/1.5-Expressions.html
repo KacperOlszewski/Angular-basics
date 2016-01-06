@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Expressions</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body ng-controller="ExpCtrl">
+
+
+<div class="well" ng-init="testObject={'a':'2'}">
+    <p>działania:</p>
+    {{items[4] + 6}}<br>
+    {{items[4] *3 }}<br>
+    1>2 = {{1>2}}
+
+    <hr>
+    <p>obiekt ng-init:</p>
+    Objekt z ng {{testObject}}
+
+    <hr>
+    <p>funkcja:</p>
+    {{testFunc(3)}}
+
+</div>
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[]);
+
+    app.controller('ExpCtrl', ['$scope', function($scope) {
+        $scope.items = [1,2,3,4,5,6];
+        $scope.number = 2;
+
+        $scope.testFunc = function(i) {
+            return i * 5
+        }
+    }])
+</script>
+</body>
+</html>

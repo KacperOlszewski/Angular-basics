@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body>
+
+<div ng-controller="ngBindCtrl">
+    <div class="well" ng-bind="message">
+        w razie faila
+    </div>
+
+    <div class="well" ng-bind-html="testIframe">
+        bez sanatize ani rusz
+    </div>
+
+    <div ng-bind-html="simpleHtml">
+        h5
+    </div>
+</div>
+
+
+<iframe src="" frameborder="0"></iframe>
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script src="../assets/js/angular-1.4.8/angular-sanitize.js"></script>
+<script>
+    var app = angular.module('app',['ngSanitize']);
+
+    app.controller('ngBindCtrl', ['$scope', '$sce', function($scope, $sce) {
+        $scope.message = "Wiadomość z binda";
+        $scope.testIframe = $sce.trustAsHtml('<iframe width="560" height="315" src="https://www.youtube.com/embed/y6dQPKouYkw" frameborder="0" allowfullscreen></iframe>');
+        $scope.simpleHtml = '<h2>Tutaj h2</h2>'
+    }]);
+
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <style>
+        .my-form.ng-invalid {
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<div ng-controller="aCtrl">
+    <a href="" ng-click="test()">click</a>
+</div>
+
+<div class="well" ng-controller="formCtrl">
+
+    <form name="myForm">
+        Imię: <input type="text" name="inputName" ng-model="name" required class="my-form">
+
+        <span class="error" ng-show="myForm.inputName.$error.required">Pole wymagane!</span>
+        <p>
+            <code>Imię = {{name}}</code>
+        </p>
+        <p>
+            <code>myForm.input.$valid = {{myForm.inputName.$valid}}</code>
+        </p>
+        <p>
+            <code>myForm.input.$error = {{myForm.inputName.$error}}</code>
+        </p>
+        <p>
+            <code>myForm.$valid = {{myForm.$valid}}</code>
+        </p>
+        <p>
+            <code>myForm.$error.required = {{!!myForm.$error.required}}</code>
+        </p>
+    </form>
+
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[]);
+
+        app.controller('aCtrl', ['$scope', function($scope) {
+            $scope.test = function() {
+                console.log('Testowa wiadomość')
+            }
+        }]);
+        app.controller('formCtrl', ['$scope', function($scope) {
+            $scope.test = function() {
+                console.log('Testowa wiadomość')
+            }
+        }]);
+
+</script>
+</body>
+</html>
