@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <style>
+        table {
+            color: #fff;
+            font-weight: bold;
+        }
+        table tr {
+            -webkit-transition: .3s ease all;
+            transition: .3s ease all;
+        }
+        .first {
+            background-color: #1b6d85;
+        }
+        .last {
+            background-color: #2b542c;
+        }
+        .middle {
+            background-color: #3e8f3e;
+        }
+        .even {
+            text-decoration: underline;
+        }
+        .odd {
+            color: #050505;
+        }
+    </style>
+</head>
+<body>
+<div ng-controller="repeatCtrl">
+
+    <div class="well">
+        <input type="text" class="form-control" ng-model="text" placeholder="search...">
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>$index</th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Surname</th>
+                <th>City</th>
+            </tr>
+        </thead>
+
+        <tbody ng-repeat="student in students | filter:text"
+               ng-class="{  first : $first,
+                            middle : $middle,
+                            last : $last,
+                            even : $even,
+                            odd : $odd }">
+            <tr>
+                <td>{{$index}}</td>
+                <td>{{student.id}}</td>
+                <td>{{student.name}}</td>
+                <td>{{student.surname}}</td>
+                <td>{{student.city}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[]);
+    app.controller('repeatCtrl', ['$scope', function($scope) {
+        $scope.students = [
+            {id:1, name:'Sergio', surname:'Gonzalez', city: 'Mexico'},
+            {id:2, name:'Paul', surname:'Etzio', city: 'Paris'},
+            {id:3, name:'Kuba', surname:'Makrela', city: 'Warszawa'},
+            {id:4, name:'Edek', surname:'Babol', city: 'Lutz'},
+            {id:5, name:'Szymon', surname:'Kruszek', city: 'Wiedeń'},
+            {id:6, name:'Wojtek', surname:'Palaczyk', city: 'Gniezno'},
+        ]
+    }]);
+
+</script>
+</body>
+</html>

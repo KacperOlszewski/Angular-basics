@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <style>
+        input {
+            -webkit-transition: .3s ease all;
+            transition: .3s ease all;
+        }
+        input.focusClass {
+            background-color: #2b669a;
+            color: #fff;
+        }
+        input.blurClass {
+            background-color: #6F0101;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+
+<div ng-controller="ngInput">
+    <div class="well">
+        <input type="text"
+               placeholder="inputen"
+               ng-model="textModel"
+               ng-class="{focusClass:focus, blurClass:blur}"
+               ng-focus="focus = true; blur = false"
+               ng-blur="focus = false; blur = true"
+               ng-change="change()"
+        >
+
+        <p>focus: {{focus}}</p>
+        <p>blur: {{blur}}</p>
+        <p>{{ textModel }}</p>
+
+        <ul>
+            <li ng-repeat="li in textArray track by $index">{{li}}</li>
+        </ul>
+    </div>
+
+</div>
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+
+<script>
+    var app = angular.module('app',[]);
+
+    app.controller('ngInput', ['$scope', function($scope) {
+        $scope.message = "Wiadomość z binda";
+        $scope.focus = false;
+        $scope.blur = false;
+        $scope.textArray = [];
+        $scope.change = function() {
+            console.log($scope.textModel);
+            $scope.textArray.push($scope.textModel);
+        }
+    }]);
+
+</script>
+</body>
+</html>
