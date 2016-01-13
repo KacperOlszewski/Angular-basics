@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body class="well">
+    <div class="container" ng-controller="ScriptCtrl">
+
+        <div class="btn-group">
+            <a ng-click="tpl='a.html'" class="btn btn-default">A</a>
+            <a ng-click="tpl='b.html'" class="btn btn-default">B</a>
+            <a ng-click="tpl='c.html'" class="btn btn-default">C</a>
+            <a ng-click="tpl='d.html'" class="btn btn-default">D</a>
+        </div>
+
+        <div id="tpl-content" ng-include src="tpl">
+            Ups, coś poszło nie tak
+        </div>
+
+    </div>
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+
+    <script type="text/ng-template" id="a.html">
+        <div ng-controller="aCtrl">
+            <p>{{ctrlVal}}</p>
+        </div>
+    </script>
+    <script type="text/ng-template" id="b.html">
+        <div ng-controller="bCtrl">
+            <p>{{ctrlVal}}</p>
+        </div>
+    </script>
+    <script type="text/ng-template" id="c.html">
+        <div ng-controller="cCtrl">
+            <p>{{ctrlVal}}</p>
+        </div>
+    </script>
+    <script type="text/ng-template" id="d.html">
+        <div ng-controller="dCtrl">
+            <p>{{ctrlVal}}</p>
+        </div>
+    </script>
+
+<script>
+    var app;
+    app = angular.module('app', [])
+
+            .controller('ScriptCtrl', ['$scope', function ($scope) {
+
+                $scope.ctrlVal = "what";
+
+            }])
+            .controller('aCtrl', ['$scope', function ($scope) {
+
+                $scope.ctrlVal = "a";
+
+            }])
+            .controller('bCtrl', ['$scope', function ($scope) {
+
+                $scope.ctrlVal = "b";
+
+            }])
+            .controller('cCtrl', ['$scope', function ($scope) {
+
+                $scope.ctrlVal = "c";
+
+            }])
+            .controller('dCtrl', ['$scope', function ($scope) {
+
+                $scope.ctrlVal = "d";
+
+            }]);
+</script>
+</body>
+</html>

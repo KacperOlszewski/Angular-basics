@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body>
+
+<div start-dr></div>
+
+<div ng-controller="StartCtrl">
+    <div my-template data="myData"></div>
+    <hr>
+    <div my-template data="myData2"></div>
+</div>
+
+<start-dr></start-dr>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[])
+
+    .value('myData', [
+        {name:'Sergio', surname:'Gonzalez', city: 'Mexico'},
+        {name:'Paul', surname:'Etzio', city: 'Paris'},
+        {name:'Kuba', surname:'Makrela', city: 'Warszawa'},
+        {name:'Edek', surname:'Babol', city: 'Lutz'},
+        {name:'Szymon', surname:'Kruszek', city: 'Wiedeń'},
+        {name:'Wojtek', surname:'Palaczyk', city: 'Gniezno'},
+        {name:'Bali', surname:'Boyat', city: 'Manila'}
+    ])
+    .value('myData2', [
+        {name:'Sergio', surname:'Gonzalez', city: 'Mexico'}
+    ])
+
+
+
+
+    .controller('StartCtrl', function ($scope, myData, myData2) {
+            $scope.myData = myData;
+            $scope.myData2 = myData2;
+    })
+    .directive('startDr', function() {
+        return {
+            template: 'Test test'
+        }
+    })
+    .directive('myTemplate', function() {
+        return {
+            scope: {data : '='},
+            templateUrl: '../templates/3.0-myTemplate.html',
+            controller: function($scope) {
+                $scope.name = '';
+                $scope.surname = '';
+                $scope.add = function(a, b) {
+                    if (a !=='' || b !=='') {
+                        $scope.data.push({
+                            name: a, surname: b
+                        });
+                    }
+                }
+                $scope.removePerson = function(index) {
+                    if (index > -1) {
+                        $scope.data.splice(index,1)
+                    }
+                }
+            }
+        }
+    })
+    .directive('removeTempl', function() {
+        return {
+            scope: {
+                rem: '&metoda'
+            },
+            templateUrl: '../templates/3.0-removeTempl.html',
+            controller: function($scope) {
+                $scope.remove = function() {
+                    $scope.rem()
+                }
+            }
+        }
+    })
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+<div class="well">
+    <table class="table table-bordered">
+        <tr ng-repeat="item in data">
+            <td>Imię: {{item.name}}</td>
+            <td>nazwisko: {{item.surname}}</td>
+            <td>
+                <remove-templ metoda="removePerson($index)"></remove-templ>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Imię: <input type="text" ng-model="name"></td>
+            <td>Nazwisko: <input type="text" ng-model="surname"></td>
+            <td><a class="btn btn-xs btn-danger" ng-click="add(name, surname); name='';surname=''">dodaj</a></td>
+        </tr>
+    </table>
+</div>

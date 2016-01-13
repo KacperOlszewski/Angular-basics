@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+</head>
+<body ng-controller="homeCtrl">
+
+<div class="container">
+    {{test}}
+    <p>
+        {{test2}}
+    </p>
+    <div class="btn-group">
+        <button class="btn-warning btn" ng-click="start()">Start</button>
+        <button class="btn-danger btn" ng-click="stop()">Stop</button>
+    </div>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script src="../assets/js/angular-1.4.8/angular-route.js"></script>
+<script>
+    var app;
+    app = angular.module('app', [])
+            .controller('homeCtrl', function ($scope, $timeout, $interval) {
+                $scope.test = 'czekamy..';
+                $scope.test2 = 'loading..';
+
+                var delatedMessage = function () {
+                    console.log('Z opóźnieniem')
+                };
+                var i = 0;
+
+                $timeout(delatedMessage, 2000, false);
+
+                var delayedMessageWithScope = function () {
+                    console.log('Z opóźnieniem');
+                    $scope.test = 'Wow!'
+                };
+                $timeout(delayedMessageWithScope, 4000, true);
+
+                var Intervalcount = function () {
+                    console.log('Z opóźnieniem');
+                    $scope.test2 = 'loading. '+i+'%';
+                    i++;
+                };
+
+                var timer = $interval(Intervalcount, 200, 50);
+
+                $scope.start = function () {
+                    if (angular.isUndefined(timer)) {
+                        timer = $interval(Intervalcount, 200)
+                    }
+                };
+                $scope.stop = function () {
+                    if (angular.isDefined(timer)) {
+                        $interval.cancel(timer);
+                        timer = undefined;
+                    }
+                }
+            })
+
+</script>
+</body>
+</html>

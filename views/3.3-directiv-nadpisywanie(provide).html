@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body>
+
+<div class="well">
+    <new-view></new-view>
+    <div new-view></div>
+    <div class="new-view"></div>
+</div>
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[])
+
+            .directive('newView', function() {
+                return {
+                    template: '<div>Odsmażony kotlet</div> ',
+                    replace: true
+                }
+            })
+            .config(function($provide) {
+                $provide.decorator('newViewDirective', function($delegate) {
+                    var directive = $delegate[0];
+                    directive.restrict = 'AC'
+
+                    return $delegate
+                })
+            })
+
+
+</script>
+</body>
+</html>

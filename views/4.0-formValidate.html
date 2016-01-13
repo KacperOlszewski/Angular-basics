@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <style>
+        .help-block {
+            display: none;
+        }
+
+        .has-error .help-block {
+            display: block;
+        }
+        .ngshow {
+            color: #3e8f3e;
+        }
+    </style>
+</head>
+<body ng-controller="validateCtrl">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form name="myForm" ng-submit="formSubmit()" novalidate>
+                <div class="form-group" ng-class="{ 'has-error' : userValid.name }">
+                    <label for="name">Imię</label>
+                    <input type="text" name="name" ng-model="user.name" class="form-control" ng-blur="validateAlert(myForm.name.$invalid, myForm.name.$name)" required>
+                    <p class="help-block">To pole jest wymagane!</p>
+                </div>
+                <!--Tutaj z ng-show, reszta na ng-blur-->
+                <div class="form-group">
+                    <label for="login">login</label>
+                    <input type="text" name="login" ng-model="user.login" class="form-control" ng-maxlength="10" ng-minlength="3" ng-blur="validateAlert(myForm.login.$invalid, myForm.login.$name)" required>
+                    <p class="ngshow" ng-show="myForm.login.$error.required && myForm.login.$touched">To pole jest wymagane!</p>
+                    <p class="ngshow" ng-show="myForm.login.$error.minlength && myForm.login.$touched">Maksymalna ilość znaków to 3</p>
+                    <p class="ngshow" ng-show="myForm.login.$error.maxlength && myForm.login.$touched">Maksymalna ilość znaków to 10</p>
+                    {{myForm.login.$error.minlength}}
+                    {{myForm.login.$error.maxlength}}
+                </div>
+
+                <div class="form-group" ng-class="{ 'has-error' : userValid.email }">
+                    <label for="email">email</label>
+                    <input type="email" name="email" ng-model="user.email" class="form-control" ng-blur="validateAlert(myForm.email.$invalid, myForm.email.$name)" required>
+                    <p class="help-block">To pole jest wymagane!</p>
+                </div>
+
+                <div class="form-group" ng-class="{ 'has-error' : userValid.type }">
+                    <label for="type">Imię</label>
+                    <select name="type" ng-model="user.type" class="form-control" ng-blur="validateAlert(myForm.type.$invalid, myForm.type.$name)" required>
+                        <option value="">-- wybierz typ --</option>
+                        <option value="1">standard</option>
+                        <option value="2">pro</option>
+                    </select>
+                    <p class="help-block">To pole jest wymagane!</p>
+                </div>
+
+                <button ng-disabled="myForm.$invalid" class="btn btn-primary" type="submit" ng-click="print()">
+                    Wyślij
+                </button>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <label>Output:</label>
+            <pre>{{user | json}}</pre>
+        </div>
+    </div>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app;
+    app = angular.module('app', [])
+        .controller('validateCtrl', function ($scope) {
+            console.log($scope);
+
+            $scope.user = {};
+            $scope.userValid = {};
+            $scope.print = function () {
+                console.log($scope.user);
+            }
+            $scope.validateAlert = function (obj, name) {
+                console.log(name);
+                $scope.userValid[name] = obj;
+            }
+        })
+
+</script>
+</body>
+</html>

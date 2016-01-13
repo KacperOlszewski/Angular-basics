@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body ng-controller="ClickCtrl">
+
+
+<div class="well" new-click="changeText(data)">
+    <h2>{{data.info}}</h2>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[])
+            .controller('ClickCtrl', function ($scope) {
+                $scope.data = {
+                    info:'Jeszcze nie kliknyło',
+                    trigger: false
+                };
+                $scope.changeText = function(param) {
+                    if (param.trigger == false) {
+                        param.info = 'Udało się!';
+                    }
+                    else {
+                        param.info = 'Jeszcze nie kliknyło!';
+                    }
+                    param.trigger = !param.trigger;
+                }
+            })
+            .directive('newClick', function($parse) {
+                return {
+                    link: function(scope, el, attr) {
+                        var fn = $parse(attr['newClick'])
+                        el.on('click', function() {
+                            scope.$apply(function() {
+                                fn(scope);
+                            })
+                        })
+                    }
+                }
+            })
+
+</script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Edycja Danych
+    </div>
+
+    <div class="panel-body">
+        <form name="editForm" novalidate>
+            <div ng-repeat="field in form">
+                <label>{{field.name}}</label> <em ng-show="field.required">*</em> :
+
+                <span ng-switch on="field.type.view">
+
+                    <span ng-switch-when="input">
+                        <input  type="text"
+                                ng-model="data[field.name]"
+                                ng-required="field.required"
+                                class="form-control"
+                        >
+                    </span>
+
+                    <span ng-switch-when="checkbox">
+                        <input  type="checkbox"
+                                ng-checked="data[field.name]"
+                                ng-model="data[field.name]"
+                                ng-required="field.required"
+                                class="form-control"
+                        >
+                    </span>
+
+                    <span ng-switch-when="select">
+                        <select ng-model="data[field.name]"
+                                ng-required="field.required"
+                                class="form-control"
+                                ng-options="item.id as item.name for item in field.type.options"
+                        ></select>
+                    </span>
+
+                    <span ng-switch-when="textarea">
+                        <textarea type="text"
+                                ng-model="data[field.name]"
+                                ng-required="field.required"
+                                class="form-control"
+                        >
+                    </span>
+                </span>
+            </div>
+        </form>
+    </div>
+</div>

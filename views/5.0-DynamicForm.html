@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+</head>
+<body ng-controller="EditCtrl">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form-Edit-Element form="fields" data="data"></form-Edit-Element>
+        </div>
+        <div class="col-md-6">
+
+            <form-View-Element form="fields" data="data"></form-View-Element>
+
+        </div>
+
+        <div class="col-md-12">
+            <pre>
+                <h4>JSON</h4>
+                {{data|json}}
+            </pre>
+        </div>
+    </div>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app;
+    app = angular.module('app', [])
+        .controller('EditCtrl', function ($scope, defaultData, formFields) {
+            $scope.data = defaultData;
+            $scope.fields = formFields;
+        })
+        .factory('defaultData', function () {
+            return {
+                name: 'Ala',
+                login: 'ala11',
+                email: 'ala@ala.pl',
+                agreement: true,
+                framework: 2,
+                description: 'AngularJS fajny jes'
+            }
+        })
+        .factory('formFields', function () {
+            return [
+                {
+                    name: 'name',
+                    title: 'Imię',
+                    required: true,
+                    type: {
+                        view: 'input'
+                    }
+                },
+                {
+                    name: 'login',
+                    title: 'Login',
+                    required: true,
+                    type: {
+                        view: 'input'
+                    }
+                },
+                {
+                    name: 'email',
+                    title: 'E-mail',
+                    required: true,
+                    type: {
+                        view: 'input'
+                    }
+                },
+                {
+                    name: 'framework',
+                    title: 'Framework',
+                    type: {
+                        view: 'select',
+                        options: [
+                            { id:0, name:'ASP.NET'},
+                            { id:1, name:'Ruby on Rails'},
+                            { id:2, name:'AngularJS'},
+                            { id:3, name:'Django'},
+                            { id:4, name:'PHP Symfony2'}
+                        ]
+                    }
+                },
+                {
+                    name: 'agreement',
+                    title: 'Zgoda na przetwarzanie danych',
+                    required: true,
+                    type: {
+                        view: 'checkbox'
+                    }
+                },
+                {
+                    name: 'description',
+                    title: 'Opis',
+                    type: {
+                        view: 'textarea'
+                    }
+                }
+            ]
+        })
+        .directive('formEditElement', function () {
+            return {
+                scope: {
+                    form: '=',
+                    data: '='
+                },
+                templateUrl: '../templates/5.0.1-dynamicForm-tmpl.html',
+            }
+        })
+        .directive('formViewElement', function () {
+            return {
+                scope: {
+                    form: '=',
+                    data: '='
+                },
+                templateUrl: '../templates/5.0.2-dynamicFormView-tmpl.html',
+            }
+        })
+
+
+</script>
+</body>
+</html>

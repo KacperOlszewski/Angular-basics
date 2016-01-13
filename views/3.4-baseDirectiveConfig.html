@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body ng-controller="ngRemakeCtrl">
+
+
+<div class="well">
+    <a class="btn btn-default" ng-click="click()">Untacked</a>
+    <a class="btn btn-success" ng-click="click()" track>Tracked</a>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[])
+            .controller('ngRemakeCtrl', function ($scope) {
+                $scope.click = function () {
+                    console.log('Kliknięty');
+                }
+            })
+            .config(function($provide) {
+                $provide.decorator('ngClickDirective', function($delegate) {
+                    var obj = $delegate[0].compile;
+                    $delegate[0].compile = function (elem, attr, transclude) {
+
+                        if (!angular.isUndefined(attr.track)) {
+                            elem.bind('click', function () {
+                                console.log('Obserwowany')
+                            })
+                        }
+                        return obj(elem, attr, transclude);
+                    }
+
+                    return $delegate
+                })
+            })
+
+</script>
+</body>
+</html>

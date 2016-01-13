@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Ui Router</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+</head>
+<body ng-controller="mainCtrl">
+
+<header>
+    <nav class="navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" ui-sref="home.list">UI Router</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="home">Home</a></li>
+                <li><a ui-sref="one">One</a></li>
+                <li><a ui-sref="two">Two</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div ui-view></div>
+    </div>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script src="../assets/js/ui-router/ui-router.js"></script>
+
+<script>
+    var app;
+    app = angular.module('app', ['ui.router'])
+            .controller('mainCtrl', function ($scope) {
+                $scope.data1 = 'home controller';
+            })
+            .config(function ($stateProvider, $urlRouterProvider) {
+
+                $urlRouterProvider.otherwise("/home");
+
+                $stateProvider
+                        .state('home', {
+                            url: "/home",
+                            templateUrl: "../templates/ui-partials/home.html"
+                        })
+                        .state('home.list', {
+                            url: "/list",
+                            templateUrl: "../templates/ui-partials/home.list.html",
+                            controller: function ($scope) {
+                                $scope.family = ['tata', 'mama', 'babcia'];
+                            }
+                        })
+                        .state('home.text', {
+                            url: "/text",
+                            template: "<h3>Wow, Wow, Wow</h3>"
+                        })
+
+                        .state('one', {
+                            url: '/one',
+                            views: {
+                                '': {
+                                    templateUrl: "../templates/ui-partials/one.html"
+                                },
+                                'columnOne@one': {
+                                    templateUrl: "../templates/ui-partials/one@columnOne.html",
+                                    controller: function ($scope) {
+                                        $scope.dogs = ['gode', 'doge', 'pitbule']
+                                    }
+                                },
+                                'columnNext@one': {
+                                    template: "kolumna druga!"
+                                }
+                            }
+                        })
+                        .state('two', {
+                            url: "/two",
+                            template: "<h3>2x Wow, Wow, Wow</h3>"
+                        })
+
+            });
+
+
+</script>
+</body>
+</html>

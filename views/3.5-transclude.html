@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body ng-controller="transcludeCtrl">
+
+
+<div class="well">
+    <the-frame>
+        <h5>tutaj jest treść dyrektywy</h5>
+    </the-frame>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[])
+            .controller('transcludeCtrl', function ($scope) {
+                $scope.click = function () {
+                    console.log('Kliknięty');
+                }
+            })
+            .directive('theFrame', function () {
+                return {
+                    templateUrl: '../templates/3.5-transclude-Templ.html',
+                    transclude: true, /*zabiera wnętrze theFrame i wstrzykuje w templ*/
+                    replace: true
+                }
+            });
+</script>
+</body>
+</html>

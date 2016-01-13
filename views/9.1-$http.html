@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+</head>
+<body ng-controller="mainCtrl" style="background-color: #66747B">
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <h1>{{ fiveDay.city_name }}</h1>
+                <h2>5-day forecast</h2>
+
+                <div class="forecast" ng-repeat="day in fiveDay.days">
+                    <div class="day row">
+
+                        <!-- datetime -->
+                        <div class="weekday col-xs-4">
+                            <p>{{ day.datetime | date }}</p>
+                        </div>
+
+
+                        <!-- icon -->
+                        <div class="weather col-xs-3">
+                            <img width="20" ng-src="{{ day.icon }}">
+                        </div>
+
+                        <div class="col-xs-1"></div>
+
+
+                        <!-- high -->
+                        <div class="high col-xs-2">
+                            <p>{{ day.high }}</p>
+
+                        </div>
+
+
+                        <!-- low -->
+                        <div class="low col-xs-2">
+                            <p>{{ day.low }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <pre>
+            {{fiveDay | json}}
+        </pre>
+    </div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script src="../assets/js/angular-1.4.8/angular-route.js"></script>
+<script>
+    var app;
+    app = angular.module('app', [])
+            .controller('mainCtrl', function ($scope, forecast) {
+
+                forecast.success(function(data) {
+                    $scope.fiveDay = data;
+                })
+
+            })
+            .factory('forecast', ['$http', function($http) {
+                return $http.get('https://s3.amazonaws.com/codecademy-content/courses/ltp4/forecast-api/forecast.json')
+                        .success(function(data) {
+                            return data;
+                        })
+                        .error(function(err) {
+                            return err;
+                        });
+            }]);
+
+</script>
+</body>
+</html>

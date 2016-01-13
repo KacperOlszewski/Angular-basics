@@ -1,0 +1,37 @@
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        Widok Danych
+    </div>
+
+    <div class="panel-body">
+        <table class="table">
+
+            <tr ng-repeat="field in form">
+                <td>{{field.name}}</td>
+
+                <td ng-switch on="field.type.view">
+
+                    <span ng-switch-when="input">
+                        {{data[field.name]}}
+                    </span>
+
+                    <span ng-switch-when="checkbox">
+                        <input  type="checkbox"
+                                ng-checked="data[field.name]"
+                                ng-disabled="true"
+                        >
+                    </span>
+
+                    <span ng-switch-when="select">
+                        {{field.type.options[data[field.name]].name}}
+                    </span>
+
+                    <span ng-switch-when="textarea">
+                        {{data[field.name]}}
+                    </span>
+
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body ng-controller="MouseCtrl" class="well">
+    <input type="text" ng-model="text">
+    <div class="btn btn-warning" ng-mousedown="log(text) ; text='ng-mousedown'">ng-mousedown</div>
+    <div class="btn btn-warning" ng-mouseenter="log(text) ; text='ng-mouseenter'">ng-mouseenter</div>
+    <div class="btn btn-warning" ng-mouseleave="log(text) ; text='ng-mouseleave'">ng-mouseleave</div>
+    <div class="btn btn-warning" ng-mousemove="log(text) ; text='ng-mousemove'">ng-mousemove</div>
+    <div class="btn btn-warning" ng-mouseover="log(text) ; text='ng-mouseover'" ng-mouseleave="log(text) ; text='ng-mouseleave'">ng-mouseover</div>
+    <div class="btn btn-warning" ng-mouseup="log(text) ; text='ng-mouseup'">ng-mouseup</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app;
+    app = angular.module('app', [])
+
+            .controller('MouseCtrl', ['$scope', function ($scope) {
+                $scope.text = "what";
+                $scope.log = function (message) {
+                    console.log(message)
+                }
+            }]);
+</script>
+</body>
+</html>

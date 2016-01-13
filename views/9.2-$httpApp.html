@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Ui Router</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+</head>
+<body ng-controller="mainCtrl">
+
+<header>
+    <nav class="navbar" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <a class="navbar-brand" ui-sref="home.list">UI Router</a>
+            </div>
+
+            <ul class="nav navbar-nav">
+                <li><a ui-sref="home">Home</a></li>
+                <li><a ui-sref="home.resp1">One</a></li>
+                <li><a ui-sref="home.resp2">One</a></li>
+                <li><a ui-sref="home.resp3">Two</a></li>
+            </ul>
+        </div>
+    </nav>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div ui-view></div>
+    </div>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script src="../assets/js/ui-router/ui-router.js"></script>
+
+<script>
+    var app;
+    app = angular.module('app', ['ui.router'])
+            .controller('mainCtrl', function ($scope, fileData) {
+
+                $scope.getdata = function(file) {
+                    fileData.getDataFile(file).then(function (result) {
+                        $scope.fileData = result;
+                    }, function (result) {
+                        $scope.fileData = 'wystąpił błąd'+result;
+                    })
+                }
+            })
+            .factory('fileData', ['$http', function($http) {
+
+                var factory = {
+                    getDataFile : function (file) {
+                        console.log(file);
+                        var data = $http({method:'GET', url:file});
+
+                        return data
+                    }
+                };
+                return factory;
+            }])
+            .config(function ($stateProvider, $urlRouterProvider) {
+
+                $urlRouterProvider.otherwise("/home");
+
+                $stateProvider
+                        .state('home', {
+                            url: "/home",
+                            templateUrl: "../templates/serverResponse/home.html",
+                        })
+                        .state('home.resp1', {
+                            url: "/response1",
+                            templateUrl: "../templates/serverResponse/resp1.html",
+                            controller: function ($scope, fileData) {
+                                $scope.link = '../templates/serverResponse/file1.json';
+
+                                $scope.data = function(file) {
+                                    fileData.getDataFile(file).then(function (result) {
+                                        $scope.fileData = result;
+                                    }, function (result) {
+                                        $scope.fileData = 'wystąpił błąd'+result;
+                                    })
+                                }
+                                console.log($scope.data($scope.link));
+                            }
+                        })
+                        .state('home.resp2', {
+                            url: "/response2",
+                            templateUrl: "../templates/serverResponse/resp2.html",
+                        })
+
+                        .state('home.resp3', {
+                            url: '/response3',
+                            views: {
+                                '': {
+                                    templateUrl: "../templates/serverResponse/resp3.html",
+                                },
+                                'columnOne@one': {
+                                    templateUrl: "../templates/ui-partials/resp3@columnOne.html",
+                                    controller: function ($scope) {
+                                        $scope.dogs = ['gode', 'doge', 'pitbule']
+                                    }
+                                },
+                                'columnNext@one': {
+                                    templateUrl: "../templates/ui-partials/resp3@columnTwo.html",
+                                }
+                            }
+                        })
+
+            });
+
+
+</script>
+</body>
+</html>

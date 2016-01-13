@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+</head>
+<body ng-controller="validateCtrl">
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-inline">
+
+                <div ng-repeat="it in items" >
+                    <input type="text" name="type" ng-model="it.type" class="form-control">
+                    <input type="text" name="name" ng-model="it.name" class="form-control">
+                    <button class="btn btn-danger btn-xs" type="button" ng-click="delete()" ng-show="$last">
+                        usuń
+                    </button>
+                </div>
+
+            </div>
+
+            <button class="btn-primary btn" ng-click="add()">dodaj</button>
+        </div>
+        <div class="col-md-6">
+            <label>Output:</label>
+            <pre>{{items | json }}</pre>
+        </div>
+    </div>
+</div>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app;
+    app = angular.module('app', [])
+            .controller('validateCtrl', function ($scope) {
+
+                $scope.items = [];
+
+                $scope.add = function () {
+                    var count = $scope.items.length;
+                    $scope.items.push({
+                        id:count+1
+                    });
+                }
+                $scope.delete = function () {
+                    var count = $scope.items.length;
+                    $scope.items.splice(count-1, 1);
+                }
+            })
+
+</script>
+</body>
+</html>

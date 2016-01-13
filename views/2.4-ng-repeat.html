@@ -11,6 +11,9 @@
             color: #fff;
             font-weight: bold;
         }
+        table thead {
+            color: #111112
+        }
         table tr {
             -webkit-transition: .3s ease all;
             transition: .3s ease all;
@@ -35,8 +38,9 @@
 <body>
 <div ng-controller="repeatCtrl">
 
-    <div class="well">
-        <input type="text" class="form-control" ng-model="text" placeholder="search...">
+    <div class="well">    <!--ng-model="text" for all fields, text.name for specific field - name-->
+        <input type="text" class="form-control" ng-model="text.name" placeholder="search by name...">
+        <input type="text" class="form-control" ng-model="text.surname" placeholder="search by surname...">
     </div>
 
     <table class="table">
@@ -50,13 +54,13 @@
             </tr>
         </thead>
 
-        <tbody ng-repeat="student in students | filter:text"
-               ng-class="{  first : $first,
-                            middle : $middle,
-                            last : $last,
-                            even : $even,
-                            odd : $odd }">
-            <tr>
+        <tbody>
+            <tr ng-repeat="student in students | filter:{name:text.name, surname:text.surname}"
+            ng-class="{  first : $first,
+            middle : $middle,
+            last : $last,
+            even : $even,
+            odd : $odd }">
                 <td>{{$index}}</td>
                 <td>{{student.id}}</td>
                 <td>{{student.name}}</td>
@@ -78,6 +82,7 @@
             {id:4, name:'Edek', surname:'Babol', city: 'Lutz'},
             {id:5, name:'Szymon', surname:'Kruszek', city: 'Wiedeń'},
             {id:6, name:'Wojtek', surname:'Palaczyk', city: 'Gniezno'},
+            {id:7, name:'Bali', surname:'Boyat', city: 'Manila'}
         ]
     }]);
 

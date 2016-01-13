@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Angular</title>
+
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+</head>
+<body ng-controller="ComponentCtrl">
+
+
+<component-dir data="content"></component-dir>
+
+
+<script src="../assets/js/angular-1.4.8/angular.js"></script>
+<script>
+    var app = angular.module('app',[])
+            .controller('ComponentCtrl', function ($scope) {
+                $scope.content = {
+                    info:'tło takie czerwone',
+                    trigger: false
+                };
+            })
+            .directive('componentDir', function() {
+                return {
+                    restrict: 'E',
+                    scope: {
+                        data: '='
+                    },
+                    template: '<h1 change-color ng-class="{\'alert-success\':data.trigger, \'alert-danger\':!data.trigger} ">{{data.info}}</h1>',
+                    replace: true
+                }
+            })
+            .directive('changeColor', function($parse) {
+                return {
+                    restrict: 'A',
+                    link: function(scope, elm, attrs) {
+                        console.log('dyrektywa działa!');
+                        elm.on('click', function() {
+
+                            var parseAtrybut = $parse(attrs.$attr['changeColor']);
+                            console.log('kliknięto:',parseAtrybut);
+
+                            scope.data.trigger ? scope.data.info='tło takie czerwone' : scope.data.info='tło takie zielone';
+                            scope.data.trigger = !scope.data.trigger;
+                            scope.$apply();
+                        })
+                    }
+                }
+            })
+
+</script>
+</body>
+</html>
